@@ -1,39 +1,29 @@
-# PttAutoLoginPost
-PTT自動登入發文(Python) for Windows and Linux
-* [Demo Video](https://youtu.be/FkdR6C-a9Nw) - Linux 
+# Ptt_party_cadres
+PTT黨工程式
+你想成為黨工嗎? 你想養帳號嗎?
+那就看下去吧 呵呵
 
 ## 特色
-* 自動登入PTT發文，再登出PTT
+* 一個指令讓你爽爽養帳號呵呵
    
 ## 使用方法
-請將下列程式碼修改為自己的PTT ID 以及 Password
+請建立檔案account_password.txt
+並在內輸入
 ```
-user = 'Your PTT ID'
-password = 'Your PTT Password'
+帳號1 密碼1
+帳號2 密碼2
+帳號3 密碼3
+... ...
 ```
 
 ## 執行範例 
 ``` 
 $ python PttAuto.py 
 ```
-預設為在PTT  Test板 發文
-
-標題 : 發文文字測試
-
-內文 : 這是一篇測試,哇哈哈
-
-``` 
-post('test', u'發文文字測試', u'這是一篇測試,哇哈哈')
-``` 
-
-## 執行過程
-![alt tag](http://i.imgur.com/kGx379D.jpg)
-
 
 ## 執行環境
-Ubuntu 12.04
-
-Python 2.7.3
+Ubuntu 16.04
+Python 2.7.9
 
 ## License
 MIT license
