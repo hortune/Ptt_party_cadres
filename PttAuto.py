@@ -106,9 +106,9 @@ def main():
        
 
 if __name__=="__main__" :
-    if os.path.exists('news.txt') :
-        f = open('news.txt','r')
-        data = [line.strip() for line in open("news.txt", 'r')]
+    if os.path.exists('account_password.txt') :
+        f = open('account_password.txt','r')
+        data = [line.strip() for line in open('account_password.txt', 'r')]
         for string in data :
             temp = string.split(' ')
             user = temp[0]
