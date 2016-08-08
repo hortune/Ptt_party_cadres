@@ -114,7 +114,4 @@ if __name__=="__main__" :
             user = temp[0]
             password = temp[1]
             main()
-        #print (data)
-        #print(f.read())
-    #main()
 
