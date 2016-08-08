@@ -2,7 +2,8 @@
 import telnetlib
 import sys
 import time
-
+import json
+import os
 
 host = 'ptt.cc'
 user = 'Your PTT ID'
@@ -100,11 +101,20 @@ def post(board, title, content) :
 
 def main():
     login(host, user ,password)    
-    post('test', u'發文文字測試', u'這是一篇測試,哇哈哈')
+    #post('test', u'發文文字測試', u'這是一篇測試,哇哈哈')
     disconnect()     
        
 
 if __name__=="__main__" :
-   main()
-
+    if os.path.exists('news.txt') :
+        f = open('news.txt','r')
+        data = [line.strip() for line in open("news.txt", 'r')]
+        for string in data :
+            temp = string.split(' ')
+            user = temp[0]
+            password = temp[1]
+            main()
+        #print (data)
+        #print(f.read())
+    #main()
 
