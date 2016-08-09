@@ -5,6 +5,7 @@ import time
 import json
 import os
 from getch import getch, pause
+import ascii_art
 host = 'ptt.cc'
 global account_password
 account_password=[]
@@ -131,5 +132,6 @@ def load_exist_account():
             account_password.append(temp)
     print "finish loading"
 if __name__=="__main__" :
+    #ascii_art.output('test.png')
     load_exist_account()
     in_menu()
