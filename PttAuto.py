@@ -4,12 +4,10 @@ import sys
 import time
 import json
 import os
-
+from getch import getch, pause
 host = 'ptt.cc'
-user = 'Your PTT ID'
-password = 'Your PTT Password'
-
-
+global account_password
+account_password=[]
 def login(host, user ,password) :
     global telnet
     telnet = telnetlib.Telnet(host)
@@ -28,36 +26,35 @@ def login(host, user ,password) :
         telnet.write(password + "\r\n")
         time.sleep(5)
         content = telnet.read_very_eager().decode('big5','ignore')
-        #print content
         if u"密碼不對" in content:
            print "密碼不對或無此帳號。程式結束"
            sys.exit()
            content = telnet.read_very_eager().decode('big5','ignore')
         if u"您想刪除其他重複登入" in content:
-           print '刪除其他重複登入的連線....'
+           #print '刪除其他重複登入的連線....'
            telnet.write("y\r\n")
            time.sleep(10)
            content = telnet.read_very_eager().decode('big5','ignore')
         if u"請按任意鍵繼續" in content:
-           print "資訊頁面，按任意鍵繼續..."
+           #print "資訊頁面，按任意鍵繼續..."
            telnet.write("\r\n" )
            time.sleep(2)
            content = telnet.read_very_eager().decode('big5','ignore')
         if u"您要刪除以上錯誤嘗試" in content:
-           print "刪除以上錯誤嘗試..."
+           #print "刪除以上錯誤嘗試..."
            telnet.write("y\r\n")
            time.sleep(5)
            content = telnet.read_very_eager().decode('big5','ignore')
         if u"您有一篇文章尚未完成" in content:
-           print '刪除尚未完成的文章....'
+           #print '刪除尚未完成的文章....'
            # 放棄尚未編輯完的文章
            telnet.write("q\r\n")   
            time.sleep(5)   
            content = telnet.read_very_eager().decode('big5','ignore')
-        print "----------------------------------------------"
-        print "------------------ 登入完成 ------------------"
-        print "----------------------------------------------"
-        
+        #print "----------------------------------------------"
+        #print "------------------ 登入完成 ------------------"
+        #print "----------------------------------------------"
+        print "login "+user+" success"
     else:
         print "沒有可輸入帳號的欄位，網站可能掛了"
 
@@ -68,9 +65,10 @@ def disconnect() :
      time.sleep(3)
      #content = telnet.read_very_eager().decode('big5','ignore')
      #print content
-     print "----------------------------------------------"
-     print "------------------ 登出完成 ------------------"
-     print "----------------------------------------------"
+     #print "----------------------------------------------"
+     #print "------------------ 登出完成 ------------------"
+     #print "----------------------------------------------"
+     print "logout success"
      telnet.close()
 
 def post(board, title, content) :
@@ -99,19 +97,39 @@ def post(board, title, content) :
         print "------------------ 發文成功 ------------------"
         print "----------------------------------------------"
 
-def main():
+def main(host,user,password):
     login(host, user ,password)    
     #post('test', u'發文文字測試', u'這是一篇測試,哇哈哈')
     disconnect()     
-       
-
-if __name__=="__main__" :
+def auto_login():
+    global account_password
+    for temp in account_password:
+      user = temp[0]
+      password = temp[1]
+      main(host,user,password)
+def in_menu():
+    while(1):
+        os.system('clear')
+        print "press 1 for auto_login"
+        print u"press 2 for 帶風向"
+        print "press q for leave"
+        command = getch()
+        if command == 'S': 
+            print 'YES'
+        if command == "1" :
+            auto_login()
+        if command == "q":
+            sys.exit()
+        pause()
+def load_exist_account():
+    print "loading account and password..."
     if os.path.exists('account_password.txt') :
         f = open('account_password.txt','r')
         data = [line.strip() for line in open('account_password.txt', 'r')]
         for string in data :
             temp = string.split(' ')
-            user = temp[0]
-            password = temp[1]
-            main()
-
+            account_password.append(temp)
+    print "finish loading"
+if __name__=="__main__" :
+    load_exist_account()
+    in_menu()
