@@ -107,20 +107,63 @@ def auto_login():
     for temp in account_password:
       user = temp[0]
       password = temp[1]
+      print temp[0]+" "+temp[1]
       main(host,user,password)
+
+def add_account():
+    print "how many account do you want to add"
+    inpu = input()
+    print inpu
+    inpu = '1232'
+    while isinstance(inpu,int)==False: 
+        try:
+            inpu=input('Number>> ')
+        except SyntaxError:
+            inpu = None
+        print inpu
+    print "wtf"
+    global wri
+    if os.path.exists('account_pasword.txt') :
+        wri=open('account_password.txt','a+')
+    else:
+        wri=open('account_pasword.txt','w') 
+        if inpu>0 :
+            temp=[]
+            print "account"
+            account = raw_input()
+            print "password"
+            password = raw_input()
+            temp.append(account)
+            temp.append(password)
+            account_password.append(temp)
+            wri.write(account +" "+password)
+            inpu-=1
+    while inpu>0:
+        temp = []
+        print "account"
+        account = raw_input()
+        print "password"
+        password = raw_input()
+        temp.append(account)
+        temp.append(password)
+        account_password.append(temp)
+        wri.write("\n"+account +" "+password)
+        inpu-=1
 def in_menu():
     while(1):
         os.system('clear')
         print "press 1 for auto_login"
         print u"press 2 for 帶風向"
+        print "press a for adding account"
         print "press q for leave"
         command = getch()
-        if command == 'S': 
-            print 'YES'
+        print ""
         if command == "1" :
             auto_login()
         if command == "q":
             sys.exit()
+        if command == "a":
+            add_account()
         pause()
 def load_exist_account():
     print "loading account and password..."
@@ -130,7 +173,8 @@ def load_exist_account():
         for string in data :
             temp = string.split(' ')
             account_password.append(temp)
-    print "finish loading"
+            #print account_password
+    #print "finish loading"
 if __name__=="__main__" :
     #ascii_art.output('test.png')
     load_exist_account()
